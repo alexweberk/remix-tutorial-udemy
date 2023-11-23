@@ -1,53 +1,75 @@
-export function headers({
-  loaderHeaders,
-  parentHeaders,
-}: {
-  loaderHeaders: Headers;
-  parentHeaders: Headers;
-}) {
-  console.log(
-    "This is an example of how to set caching headers for a route, feel free to change the value of 60 seconds or remove the header"
-  );
-  return {
-    // This is an example of how to set caching headers for a route
-    // For more info on headers in Remix, see: https://remix.run/docs/en/v1/route/headers
-    "Cache-Control": "public, max-age=60, s-maxage=60",
-  };
+import { Link } from "@remix-run/react";
+import {
+	FaArrowRight,
+	FaDollarSign,
+	FaChartBar,
+} from "react-icons/fa/index.js";
+import marketingStyles from "@/styles/marketing.css";
+
+import MainHeader from "../components/navigation/MainHeader";
+
+export function links() {
+	return [{ rel: "stylesheet", href: marketingStyles }];
+}
+
+export function headers() {
+	return {
+		"Cache-Control": "max-age=7200",
+	};
 }
 
 export default function Index() {
-  return (
-    <main style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.4" }}>
-      <h1>Welcome to Remix</h1>
-      <ul>
-        <li>
-          <a
-            target="_blank"
-            href="https://remix.run/tutorials/blog"
-            rel="noreferrer noopener"
-          >
-            15m Quickstart Blog Tutorial
-          </a>
-        </li>
-        <li>
-          <a
-            target="_blank"
-            href="https://remix.run/tutorials/jokes"
-            rel="noreferrer noopener"
-          >
-            Deep Dive Jokes App Tutorial
-          </a>
-        </li>
-        <li>
-          <a
-            target="_blank"
-            href="https://remix.run/docs"
-            rel="noreferrer noopener"
-          >
-            Remix Docs
-          </a>
-        </li>
-      </ul>
-    </main>
-  );
+	return (
+		<>
+			<MainHeader />
+			<main>
+				<section className='marketing-section'>
+					<header>
+						<FaDollarSign />
+						<h2>A Central Space</h2>
+					</header>
+					<div className='marketing-content'>
+						<div className='marketing-image'>
+							<img
+								src='images/expenses-management.jpg'
+								alt='A list of expenses.'
+							/>
+						</div>
+						<div className='marketing-explanation'>
+							<p>Manage your expenses in one central place.</p>
+							<p>
+								<Link
+									className='cta'
+									to='/expenses'
+								>
+									<span>Get Started</span>
+									<FaArrowRight />
+								</Link>
+							</p>
+						</div>
+					</div>
+				</section>
+				<section className='marketing-section'>
+					<header>
+						<FaChartBar />
+						<h2>Detailed Analytics</h2>
+					</header>
+					<div className='marketing-content'>
+						<p className='marketing-explanation'>
+							Benefit from best-in-class analytics to understand your spending
+							patterns.
+						</p>
+						<div className='marketing-image'>
+							<img
+								src='images/expenses-chart.jpg'
+								alt='A demo bar chart.'
+							/>
+						</div>
+					</div>
+				</section>
+			</main>
+		</>
+	);
 }
+
+export const handle = { disableJS: true };
